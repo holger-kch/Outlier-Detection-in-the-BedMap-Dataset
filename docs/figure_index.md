@@ -1,27 +1,34 @@
 # Figure Index
 
 This index maps the tracked figures to the code or slide source behind them.
-Figure scope is restricted to the final presentation's GNN/pseudo-label block:
-main slides 7-16 and Appendix 10-18. Context from slides 1-4 is explained in
-the README as text.
+Figure scope is restricted to Holger's GNN/pseudo-label material inside the
+requested presentation window: main slides 7-16 and Appendix 10-18. Context
+from slides 1-4 is explained in the README as text. Slide 7 is not tracked
+because it covers the group's along-track kNN spike-detection method, not the
+GNN component.
 
 ## Pseudo-Label Figures
 
 | Figure | Slide source | Purpose | Code/source |
 |---|---|---|---|
 | [double_hit.png](../figures/pseudolabels/double_hit.png) | Slide 9 / Appendix 11 | Shows how two nearby independent tracks can nominate a pseudo-label candidate. | [make_pseudolabel_figs.py](../src/presentation/make_pseudolabel_figs.py), [step1_2_candidates_support.py](../src/pipeline/step1_2_candidates_support.py) |
-| [support_qualifications.png](../figures/pseudolabels/support_qualifications.png) | Appendix 12 | Shows the support requirements around a candidate pair. | [make_pseudolabel_figs.py](../src/presentation/make_pseudolabel_figs.py), [step1_2_candidates_support.py](../src/pipeline/step1_2_candidates_support.py) |
 | [support_relation.png](../figures/pseudolabels/support_relation.png) | Appendix 13 | Shows the local support relation used before assigning a pseudo-label. | [make_pseudolabel_figs.py](../src/presentation/make_pseudolabel_figs.py), [step1_2_candidates_support.py](../src/pipeline/step1_2_candidates_support.py) |
 | [cone.png](../figures/pseudolabels/cone.png) | Appendix 14 | Shows the cone verdict used to decide whether a candidate is physically consistent with support. | [make_pseudolabel_figs.py](../src/presentation/make_pseudolabel_figs.py), [step1_2_candidates_support.py](../src/pipeline/step1_2_candidates_support.py) |
 | [ice_thickness_outlier_seeds.png](../figures/pseudolabels/ice_thickness_outlier_seeds.png) | Slide 10 / Appendix 15 | Shows the resulting inlier/outlier pseudo-label seeds on the ice-thickness map. | [make_seed_map.py](../src/pipeline/make_seed_map.py) |
+
+Appendix 12 is a text/formula slide. Its support requirements are documented
+in the README and implemented in
+[step1_2_candidates_support.py](../src/pipeline/step1_2_candidates_support.py);
+there is no separate tracked figure for that slide.
 
 ## GNN Figures
 
 | Figure | Slide source | Purpose | Code/source |
 |---|---|---|---|
+| [gnn_thumb.png](../figures/gnn/gnn_thumb.png) | Slide 8 | Shows the semi-supervised node-classification setup: labelled seed nodes, unlabeled graph nodes, and message passing toward a scored node. | [make_gnn_thumb.py](../src/presentation/make_gnn_thumb.py), [physae_gnn_v4.py](../src/pipeline/physae_gnn_v4.py) |
 | [gnn_features.png](../figures/gnn/gnn_features.png) | Slide 11 | Lists the physics-only node features used by the GNN. | [make_gnn_features_fig.py](../src/presentation/make_gnn_features_fig.py), [physae_prepare_v4.py](../src/pipeline/physae_prepare_v4.py) |
 | [gnn_model.png](../figures/gnn/gnn_model.png) | Slide 12 | Shows message passing, seed classes, and the training objective. | [make_gnn_model_fig.py](../src/presentation/make_gnn_model_fig.py), [physae_gnn_v4.py](../src/pipeline/physae_gnn_v4.py) |
-| [knn_map.png](../figures/gnn/knn_map.png) | Appendix 16 | Shows the `k=16` graph idea. | [make_knn_figs.py](../src/presentation/make_knn_figs.py), [build_spatial_graph_v3.py](../src/pipeline/build_spatial_graph_v3.py) |
+| [knn_map.png](../figures/gnn/knn_map.png) | Slide 8 / Appendix 16 | Shows the `k=16` graph idea. | [make_knn_figs.py](../src/presentation/make_knn_figs.py), [build_spatial_graph_v3.py](../src/pipeline/build_spatial_graph_v3.py) |
 | [edge_table.png](../figures/gnn/edge_table.png) | Appendix 17 | Shows the two edge attributes: relative distance and signed gradient. | [make_edge_table_fig.py](../src/presentation/make_edge_table_fig.py), [physae_prepare_v4.py](../src/pipeline/physae_prepare_v4.py) |
 
 ## Result Figures

@@ -14,9 +14,11 @@ selection identifies high-confidence outlier and inlier seeds. A semi-supervised
 GraphSAGE model then learns from those seeds on a k-nearest-neighbour graph and
 assigns an outlier probability to all `74,747,031` points.
 
-Figure scope follows the final presentation: the repository explains the
-context from slides 1-4 in text, and the tracked figures are restricted to the
-GNN/pseudo-label material from slides 7-16 and Appendix 10-18.
+Figure scope follows the final presentation: slides 1-4 are explained as
+context, and the tracked figures are restricted to Holger's GNN/pseudo-label
+material inside slides 7-16 and Appendix 10-18. Slide 7 is the group's
+along-track kNN spike-detection method, so it is left out of this GNN-focused
+repository.
 
 <table>
   <tr>
@@ -83,6 +85,13 @@ full survey graph.
 
 ## How The GNN Is Built
 
+The overview slide reduces the method to a semi-supervised node-classification
+problem: red/green pseudo-label seeds supervise training on the graph, grey
+nodes are unlabeled during training, and the trained model later scores every
+node.
+
+<img src="figures/readme/gnn_thumb.png" alt="Semi-supervised GNN node-classification overview" width="430">
+
 ### 1. Pseudo-Labels
 
 The model does not use manually labelled outliers. It uses seed labels produced
@@ -96,12 +105,16 @@ The seed-selection code is in [src/pipeline/step1_2_candidates_support.py](src/p
 with inspection and summary helpers in [src/pipeline/analyze_step1_2_labels.py](src/pipeline/analyze_step1_2_labels.py)
 and [src/pipeline/make_seed_map.py](src/pipeline/make_seed_map.py).
 
+The support rule is: gather nearby measurements within 2 km, keep candidate
+pairs only when the local support has at least 5 tracks, 2 surveys, and 100
+support points, and remove support points that fail the 4-nearest-neighbour
+depth-change check. The cone/band test then decides whether the candidate is
+consistent with the local support or should become an outlier seed.
+
 <p>
   <img src="figures/readme/double_hit.png" alt="Double-hit pseudo-label candidate" width="49%">
   <img src="figures/readme/support_relation.png" alt="Support relation for pseudo-labels" width="49%">
 </p>
-
-<img src="figures/readme/support_qualifications.png" alt="Support qualifications for pseudo-labels" width="760">
 
 <p>
   <img src="figures/readme/cone.png" alt="Cone verdict for pseudo-labels" width="49%">
@@ -225,6 +238,8 @@ are intentionally not tracked.
 - [docs/code_map.md](docs/code_map.md) maps each scientific step to code.
 - [docs/figure_index.md](docs/figure_index.md) maps each figure to the script
   that generated it.
+- [docs/slide_coverage.md](docs/slide_coverage.md) states exactly which
+  requested slides are represented by text, code, and figures.
 - [docs/results_summary.md](docs/results_summary.md) collects the key numbers.
 - [docs/reproduction_notes.md](docs/reproduction_notes.md) explains what is
   needed to rerun the analysis on the original cluster environment.
