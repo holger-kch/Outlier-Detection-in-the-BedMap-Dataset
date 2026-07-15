@@ -20,27 +20,22 @@ material inside slides 7-16 and Appendix 10-18. Slide 7 is the group's
 along-track kNN spike-detection method, so it is left out of this GNN-focused
 repository.
 
-<table>
-  <tr>
-    <td width="50%">
-      <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Pseudo-label seeds on the ice-thickness map" width="100%">
-    </td>
-    <td width="50%">
-      <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Ice thickness map with GNN outliers" width="100%">
-    </td>
-  </tr>
-  <tr>
-    <td>
-      The GNN is trained from pseudo-labels: geometry/physics rules create
-      high-confidence inlier and outlier seeds before any neural model is used.
-    </td>
-    <td>
-      The final scoring pass marks high-probability model outliers in red on
-      top of the ice-thickness map. At `p_outlier >= 0.7`, the GNN flags
-      `702,675` points.
-    </td>
-  </tr>
-</table>
+README figures are shown full-width where possible and can be clicked to open
+the full-resolution PNG.
+
+The GNN is trained from pseudo-labels: geometry/physics rules create
+high-confidence inlier and outlier seeds before any neural model is used.
+
+<a href="figures/readme/ice_thickness_outlier_seeds.png">
+  <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Pseudo-label seeds on the ice-thickness map" width="100%">
+</a>
+
+The final scoring pass marks high-probability model outliers in red on top of
+the ice-thickness map. At `p_outlier >= 0.7`, the GNN flags `702,675` points.
+
+<a href="figures/readme/ice_thickness_gnn_outliers_thr0p7.png">
+  <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Ice thickness map with GNN outliers" width="100%">
+</a>
 
 ## Project Context
 
@@ -90,7 +85,9 @@ problem: red/green pseudo-label seeds supervise training on the graph, grey
 nodes are unlabeled during training, and the trained model later scores every
 node.
 
-<img src="figures/readme/gnn_thumb.png" alt="Semi-supervised GNN node-classification overview" width="430">
+<a href="figures/readme/gnn_thumb.png">
+  <img src="figures/readme/gnn_thumb.png" alt="Semi-supervised GNN node-classification overview" width="620">
+</a>
 
 ### 1. Pseudo-Labels
 
@@ -111,15 +108,21 @@ support points, and remove support points that fail the 4-nearest-neighbour
 depth-change check. The cone/band test then decides whether the candidate is
 consistent with the local support or should become an outlier seed.
 
-<p>
-  <img src="figures/readme/double_hit.png" alt="Double-hit pseudo-label candidate" width="49%">
-  <img src="figures/readme/support_relation.png" alt="Support relation for pseudo-labels" width="49%">
-</p>
+<a href="figures/readme/double_hit.png">
+  <img src="figures/readme/double_hit.png" alt="Double-hit pseudo-label candidate" width="100%">
+</a>
 
-<p>
-  <img src="figures/readme/cone.png" alt="Cone verdict for pseudo-labels" width="49%">
-  <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Resulting pseudo-label seeds" width="49%">
-</p>
+<a href="figures/readme/support_relation.png">
+  <img src="figures/readme/support_relation.png" alt="Support relation for pseudo-labels" width="100%">
+</a>
+
+<a href="figures/readme/cone.png">
+  <img src="figures/readme/cone.png" alt="Cone verdict for pseudo-labels" width="100%">
+</a>
+
+<a href="figures/readme/ice_thickness_outlier_seeds.png">
+  <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Resulting pseudo-label seeds" width="100%">
+</a>
 
 ### 2. Physics-Only Node Features
 
@@ -142,7 +145,9 @@ The feature construction lives in [src/pipeline/physae_prepare_v4.py](src/pipeli
 The exact feature statistics from the run are kept in
 [results/physae_feature_stats_v4.json](results/physae_feature_stats_v4.json).
 
-<img src="figures/readme/gnn_features.png" alt="GNN physics feature table" width="760">
+<a href="figures/readme/gnn_features.png">
+  <img src="figures/readme/gnn_features.png" alt="GNN physics feature table" width="100%">
+</a>
 
 ### 3. k-NN Spatial Graph
 
@@ -157,9 +162,13 @@ and [src/pipeline/make_k16_edge_cache.py](src/pipeline/make_k16_edge_cache.py).
 The run metadata are in [results/spatial_edges_v3_meta.json](results/spatial_edges_v3_meta.json)
 and [results/physae_edge_attr_v4_k16_meta.json](results/physae_edge_attr_v4_k16_meta.json).
 
-<img src="figures/readme/knn_map.png" alt="k-nearest-neighbour map concept" width="520">
+<a href="figures/readme/knn_map.png">
+  <img src="figures/readme/knn_map.png" alt="k-nearest-neighbour map concept" width="760">
+</a>
 
-<img src="figures/readme/edge_table.png" alt="GNN edge table with distance and signed gradient" width="760">
+<a href="figures/readme/edge_table.png">
+  <img src="figures/readme/edge_table.png" alt="GNN edge table with distance and signed gradient" width="100%">
+</a>
 
 ### 4. Edge-Gated GraphSAGE
 
@@ -172,7 +181,9 @@ The implementation is in [src/pipeline/physae_gnn_v4.py](src/pipeline/physae_gnn
 Hyperparameter search code is in [src/pipeline/optuna_physae_v4.py](src/pipeline/optuna_physae_v4.py),
 and the selected configuration is stored in [results/optuna_best_v4.json](results/optuna_best_v4.json).
 
-<img src="figures/readme/gnn_model.png" alt="Edge-gated GraphSAGE model diagram" width="860">
+<a href="figures/readme/gnn_model.png">
+  <img src="figures/readme/gnn_model.png" alt="Edge-gated GraphSAGE model diagram" width="100%">
+</a>
 
 ### 5. Cross-Region Validation
 
@@ -188,15 +199,21 @@ Validation code:
 - [src/presentation/make_physae_logit_distribution.py](src/presentation/make_physae_logit_distribution.py)
 - [src/presentation/make_physae_confusion_matrix.py](src/presentation/make_physae_confusion_matrix.py)
 
-<p>
-  <img src="figures/readme/physae_training_history.png" alt="GNN training and validation loss" width="49%">
-  <img src="figures/readme/physae_cross_region_roc.png" alt="Cross-region ROC" width="49%">
-</p>
+<a href="figures/readme/physae_training_history.png">
+  <img src="figures/readme/physae_training_history.png" alt="GNN training and validation loss" width="100%">
+</a>
 
-<p>
-  <img src="figures/readme/physae_cross_region_logit_distribution.png" alt="Cross-region logit distributions" width="49%">
-  <img src="figures/readme/physae_cross_region_confusion_matrix.png" alt="Cross-region confusion matrix" width="49%">
-</p>
+<a href="figures/readme/physae_cross_region_roc.png">
+  <img src="figures/readme/physae_cross_region_roc.png" alt="Cross-region ROC" width="100%">
+</a>
+
+<a href="figures/readme/physae_cross_region_logit_distribution.png">
+  <img src="figures/readme/physae_cross_region_logit_distribution.png" alt="Cross-region logit distributions" width="100%">
+</a>
+
+<a href="figures/readme/physae_cross_region_confusion_matrix.png">
+  <img src="figures/readme/physae_cross_region_confusion_matrix.png" alt="Cross-region confusion matrix" width="100%">
+</a>
 
 ### 6. Full-Map Scoring
 
@@ -210,7 +227,17 @@ Code:
 - [src/presentation/make_ice_thickness_physae_outlier_map.py](src/presentation/make_ice_thickness_physae_outlier_map.py)
   for the map.
 
-<img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Final GNN outlier map at threshold 0.7" width="760">
+<a href="figures/readme/ice_thickness_gnn_outliers_thr0p7.png">
+  <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Final GNN outlier map at threshold 0.7" width="100%">
+</a>
+
+## Code And Figure References
+
+Every figure shown in this README is mapped to its slide source and generating
+script in [docs/figure_index.md](docs/figure_index.md). The slide-by-slide
+coverage check is in [docs/slide_coverage.md](docs/slide_coverage.md), and the
+analysis workflow is mapped from pseudo-labels to full-map scoring in
+[docs/code_map.md](docs/code_map.md).
 
 ## Repository Layout
 
