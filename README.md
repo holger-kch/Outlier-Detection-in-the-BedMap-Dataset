@@ -358,3 +358,9 @@ This repository focuses only on the GNN component. Other project components
 from the group presentation, such as along-track kNN spike detection, PCA,
 latent-space carving, graph autoencoder work, ensemble slides, and decorative
 PowerPoint backgrounds, are deliberately excluded.
+
+## Note
+
+This GitHub repository was assembled and documented with Codex, based on
+Holger K. Christiansen's final project presentation and the associated analysis
+code from the original cluster project.
