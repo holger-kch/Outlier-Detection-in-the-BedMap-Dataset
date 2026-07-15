@@ -14,10 +14,14 @@ selection identifies high-confidence outlier and inlier seeds. A semi-supervised
 GraphSAGE model then learns from those seeds on a k-nearest-neighbour graph and
 assigns an outlier probability to all `74,747,031` points.
 
+Figure scope follows the final presentation: the repository explains the
+context from slides 1-4 in text, and the tracked figures are restricted to the
+GNN/pseudo-label material from slides 7-16 and Appendix 10-18.
+
 <table>
   <tr>
     <td width="50%">
-      <img src="figures/readme/gnn_cover.png" alt="GNN survey graph concept" width="100%">
+      <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Pseudo-label seeds on the ice-thickness map" width="100%">
     </td>
     <td width="50%">
       <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Ice thickness map with GNN outliers" width="100%">
@@ -25,9 +29,8 @@ assigns an outlier probability to all `74,747,031` points.
   </tr>
   <tr>
     <td>
-      Each measurement is treated as a graph node. Edges connect nearby points,
-      so the model can compare a point with its spatial neighbourhood instead
-      of judging it in isolation.
+      The GNN is trained from pseudo-labels: geometry/physics rules create
+      high-confidence inlier and outlier seeds before any neural model is used.
     </td>
     <td>
       The final scoring pass marks high-probability model outliers in red on
@@ -36,6 +39,23 @@ assigns an outlier probability to all `74,747,031` points.
     </td>
   </tr>
 </table>
+
+## Project Context
+
+BedMap collects Antarctic ice-thickness measurements from many survey campaigns
+spanning decades. The core measurement comes from airborne radio echo sounding:
+a VHF signal is sent through the ice, the bed echo is recorded, and travel time
+is converted to ice thickness.
+
+That history makes the dataset valuable, but also messy. The project targets
+measurement errors such as sudden unphysical jumps along a track or local
+disagreements between nearby independent tracks. Those errors matter because
+ice-thickness fields are inputs to downstream Antarctic and climate modelling.
+
+The GNN does not see only thickness. It uses a small set of physical variables
+available for each point, including ice thickness, bed/surface geometry, flow,
+surface slope, surface mass balance, and temperature. Coordinates are used to
+build the graph edges, not as node features.
 
 ## Main Result
 
@@ -55,8 +75,6 @@ Full-map inference:
 | `p_outlier >= 0.5` | 1,951,535 |
 | `p_outlier >= 0.7` | 702,675 |
 | `p_outlier >= 0.9` | 34,500 |
-
-<img src="figures/readme/gnn_result.png" alt="Compact GNN result card" width="760">
 
 The useful outcome is not that every red point is automatically a confirmed
 bad measurement. The useful outcome is a continent-wide prioritised candidate
@@ -78,7 +96,17 @@ The seed-selection code is in [src/pipeline/step1_2_candidates_support.py](src/p
 with inspection and summary helpers in [src/pipeline/analyze_step1_2_labels.py](src/pipeline/analyze_step1_2_labels.py)
 and [src/pipeline/make_seed_map.py](src/pipeline/make_seed_map.py).
 
-<img src="figures/readme/gnn_inputs.png" alt="GNN inputs: node features, graph, and seed labels" width="760">
+<p>
+  <img src="figures/readme/double_hit.png" alt="Double-hit pseudo-label candidate" width="49%">
+  <img src="figures/readme/support_relation.png" alt="Support relation for pseudo-labels" width="49%">
+</p>
+
+<img src="figures/readme/support_qualifications.png" alt="Support qualifications for pseudo-labels" width="760">
+
+<p>
+  <img src="figures/readme/cone.png" alt="Cone verdict for pseudo-labels" width="49%">
+  <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Resulting pseudo-label seeds" width="49%">
+</p>
 
 ### 2. Physics-Only Node Features
 
@@ -117,6 +145,8 @@ The run metadata are in [results/spatial_edges_v3_meta.json](results/spatial_edg
 and [results/physae_edge_attr_v4_k16_meta.json](results/physae_edge_attr_v4_k16_meta.json).
 
 <img src="figures/readme/knn_map.png" alt="k-nearest-neighbour map concept" width="520">
+
+<img src="figures/readme/edge_table.png" alt="GNN edge table with distance and signed gradient" width="760">
 
 ### 4. Edge-Gated GraphSAGE
 
@@ -178,6 +208,7 @@ Code:
 │   ├── presentation/   # scripts that generated the GNN figures
 │   └── slurm/          # cluster job wrappers for the GNN run
 ├── figures/
+│   ├── pseudolabels/   # pseudo-label figures from slides/appendix
 │   ├── gnn/            # original GNN diagrams
 │   ├── results/        # result figures
 │   └── readme/         # dark-background previews for GitHub

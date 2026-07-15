@@ -9,6 +9,7 @@ This map follows the GNN workflow from seed labels to full-map scoring.
 - [inspect_step1_2.py](../src/pipeline/inspect_step1_2.py) inspects candidate structure.
 - [make_seed_map.py](../src/pipeline/make_seed_map.py) plots the seed map.
 - [make_step1_2_outlier_review.py](../src/pipeline/make_step1_2_outlier_review.py) produces local review material.
+- [make_pseudolabel_figs.py](../src/presentation/make_pseudolabel_figs.py) generated the pseudo-label explanation figures.
 
 ## 2. Spatial Graph
 
@@ -43,4 +44,3 @@ This map follows the GNN workflow from seed labels to full-map scoring.
 
 - [physae_gnn_v4.py](../src/pipeline/physae_gnn_v4.py) runs full-map inference.
 - [make_ice_thickness_physae_outlier_map.py](../src/presentation/make_ice_thickness_physae_outlier_map.py) overlays GNN outliers on the ice-thickness map.
-
