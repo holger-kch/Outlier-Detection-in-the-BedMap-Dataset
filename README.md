@@ -318,7 +318,8 @@ Every figure shown in this README is mapped to its slide source and generating
 script in [docs/figure_index.md](docs/figure_index.md). The slide-by-slide
 coverage check is in [docs/slide_coverage.md](docs/slide_coverage.md), and the
 analysis workflow is mapped from pseudo-labels to full-map scoring in
-[docs/code_map.md](docs/code_map.md).
+[docs/code_map.md](docs/code_map.md). For taking the code into another project,
+use [docs/reuse_guide.md](docs/reuse_guide.md).
 
 ## Repository Layout
 
@@ -351,6 +352,8 @@ are intentionally not tracked.
 - [docs/results_summary.md](docs/results_summary.md) collects the key numbers.
 - [docs/reproduction_notes.md](docs/reproduction_notes.md) explains what is
   needed to rerun the analysis on the original cluster environment.
+- [docs/reuse_guide.md](docs/reuse_guide.md) explains how to extract and adapt
+  the analysis code for another BedMap-style setup.
 
 ## Scope
 

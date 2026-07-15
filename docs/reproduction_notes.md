@@ -59,3 +59,5 @@ sbatch src/slurm/run_physae_infer_v4_gpu.slurm
 The plotting scripts in [src/presentation](../src/presentation/) regenerate the
 figures after the score and fold artifacts exist.
 
+For adapting the scripts to a different directory structure or dataset copy,
+see [reuse_guide.md](reuse_guide.md).
