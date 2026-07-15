@@ -30,12 +30,23 @@ high-confidence inlier and outlier seeds before any neural model is used.
   <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Pseudo-label seeds on the ice-thickness map" width="100%">
 </a>
 
+This is the supervision set for the GNN. The pseudo-label pipeline reduces the
+raw double-hit candidates to a small set of high-confidence inlier and outlier
+seeds. Code: [step1_2_candidates_support.py](src/pipeline/step1_2_candidates_support.py)
+and [make_seed_map.py](src/pipeline/make_seed_map.py).
+
 The final scoring pass marks high-probability model outliers in red on top of
 the ice-thickness map. At `p_outlier >= 0.7`, the GNN flags `702,675` points.
 
 <a href="figures/readme/ice_thickness_gnn_outliers_thr0p7.png">
   <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Ice thickness map with GNN outliers" width="100%">
 </a>
+
+This is the final model output, not another seed map. Every point has been
+scored out-of-fold, and the red points are the high-confidence candidates at
+`p_outlier >= 0.7`. Code:
+[physae_gnn_v4.py](src/pipeline/physae_gnn_v4.py) and
+[make_ice_thickness_physae_outlier_map.py](src/presentation/make_ice_thickness_physae_outlier_map.py).
 
 ## Project Context
 
@@ -89,6 +100,11 @@ node.
   <img src="figures/readme/gnn_thumb.png" alt="Semi-supervised GNN node-classification overview" width="620">
 </a>
 
+The red and green nodes are the seed labels; grey nodes are unlabeled. Message
+passing lets labelled neighbourhood structure influence the score of a target
+node. Code: [make_gnn_thumb.py](src/presentation/make_gnn_thumb.py) and
+[physae_gnn_v4.py](src/pipeline/physae_gnn_v4.py).
+
 ### 1. Pseudo-Labels
 
 The model does not use manually labelled outliers. It uses seed labels produced
@@ -112,17 +128,37 @@ consistent with the local support or should become an outlier seed.
   <img src="figures/readme/double_hit.png" alt="Double-hit pseudo-label candidate" width="100%">
 </a>
 
+This is the first seed idea: two independent survey tracks measure nearly the
+same location. Agreement gives an inlier candidate; a large disagreement gives
+an outlier candidate, but only after the local support tests below. Code:
+[step1_2_candidates_support.py](src/pipeline/step1_2_candidates_support.py).
+
 <a href="figures/readme/support_relation.png">
   <img src="figures/readme/support_relation.png" alt="Support relation for pseudo-labels" width="100%">
 </a>
+
+The support relation sets the local slope tolerance. The left panel estimates
+how steep the nearby support can be; the right panel checks whether neighbouring
+points are compatible with that tolerance. Code:
+[step1_2_candidates_support.py](src/pipeline/step1_2_candidates_support.py)
+and [make_pseudolabel_figs.py](src/presentation/make_pseudolabel_figs.py).
 
 <a href="figures/readme/cone.png">
   <img src="figures/readme/cone.png" alt="Cone verdict for pseudo-labels" width="100%">
 </a>
 
+The cone verdict prevents isolated or one-sided support from becoming a seed.
+An inlier seed needs surrounding support and must sit inside the local band; an
+outlier seed needs surrounding support and must fail the band test. Code:
+[step1_2_candidates_support.py](src/pipeline/step1_2_candidates_support.py).
+
 <a href="figures/readme/ice_thickness_outlier_seeds.png">
   <img src="figures/readme/ice_thickness_outlier_seeds.png" alt="Resulting pseudo-label seeds" width="100%">
 </a>
+
+This is the result of the pseudo-label filtering used for training:
+`38,881` outlier seeds and `646,674` inlier seeds. Code:
+[make_seed_map.py](src/pipeline/make_seed_map.py).
 
 ### 2. Physics-Only Node Features
 
@@ -149,6 +185,11 @@ The exact feature statistics from the run are kept in
   <img src="figures/readme/gnn_features.png" alt="GNN physics feature table" width="100%">
 </a>
 
+The feature table shows the variables the model is allowed to use. Coordinates,
+track identifiers, time, and labels are excluded from node features so the model
+learns physical consistency rather than metadata shortcuts. Code:
+[physae_prepare_v4.py](src/pipeline/physae_prepare_v4.py).
+
 ### 3. k-NN Spatial Graph
 
 The graph connects each point to `k = 16` spatial neighbours. The node index is
@@ -166,9 +207,19 @@ and [results/physae_edge_attr_v4_k16_meta.json](results/physae_edge_attr_v4_k16_
   <img src="figures/readme/knn_map.png" alt="k-nearest-neighbour map concept" width="760">
 </a>
 
+The graph connects each measurement to its 16 nearest spatial neighbours. This
+is what lets the GNN compare a point with nearby measurements rather than score
+each point in isolation. Code:
+[build_spatial_graph_v3.py](src/pipeline/build_spatial_graph_v3.py).
+
 <a href="figures/readme/edge_table.png">
   <img src="figures/readme/edge_table.png" alt="GNN edge table with distance and signed gradient" width="100%">
 </a>
+
+Each edge carries distance and signed ice-thickness gradient. The signed
+gradient helps distinguish smooth terrain changes from sharp local jumps. Code:
+[physae_prepare_v4.py](src/pipeline/physae_prepare_v4.py) and
+[make_k16_edge_cache.py](src/pipeline/make_k16_edge_cache.py).
 
 ### 4. Edge-Gated GraphSAGE
 
@@ -184,6 +235,11 @@ and the selected configuration is stored in [results/optuna_best_v4.json](result
 <a href="figures/readme/gnn_model.png">
   <img src="figures/readme/gnn_model.png" alt="Edge-gated GraphSAGE model diagram" width="100%">
 </a>
+
+The model learns from outlier seeds, inlier seeds, and unlabeled nodes. Edge
+attributes gate the neighbour messages before the node classifier produces
+`p_outlier`. Code: [physae_gnn_v4.py](src/pipeline/physae_gnn_v4.py)
+and [optuna_physae_v4.py](src/pipeline/optuna_physae_v4.py).
 
 ### 5. Cross-Region Validation
 
@@ -203,17 +259,36 @@ Validation code:
   <img src="figures/readme/physae_training_history.png" alt="GNN training and validation loss" width="100%">
 </a>
 
+The training curves show both folds converging under the same selected Optuna
+configuration. The two-fold setup is used so final scores can be produced
+out-of-fold. Code:
+[make_physae_training_history.py](src/presentation/make_physae_training_history.py).
+
 <a href="figures/readme/physae_cross_region_roc.png">
   <img src="figures/readme/physae_cross_region_roc.png" alt="Cross-region ROC" width="100%">
 </a>
+
+The ROC plot tests whether a model trained in one spatial region can recover
+seed labels in the other region. This is the main generalisation check. Code:
+[validate_physae_v4.py](src/pipeline/validate_physae_v4.py) and
+[make_physae_cross_region_roc.py](src/presentation/make_physae_cross_region_roc.py).
 
 <a href="figures/readme/physae_cross_region_logit_distribution.png">
   <img src="figures/readme/physae_cross_region_logit_distribution.png" alt="Cross-region logit distributions" width="100%">
 </a>
 
+The logit distribution shows the separation between held-out outlier and inlier
+seeds before thresholding. Code:
+[physae_cross_region_seed_scores.py](src/presentation/physae_cross_region_seed_scores.py)
+and [make_physae_logit_distribution.py](src/presentation/make_physae_logit_distribution.py).
+
 <a href="figures/readme/physae_cross_region_confusion_matrix.png">
   <img src="figures/readme/physae_cross_region_confusion_matrix.png" alt="Cross-region confusion matrix" width="100%">
 </a>
+
+The confusion matrices show the practical threshold behaviour at
+`p_outlier = 0.5` for each held-out region. Code:
+[make_physae_confusion_matrix.py](src/presentation/make_physae_confusion_matrix.py).
 
 ### 6. Full-Map Scoring
 
@@ -230,6 +305,12 @@ Code:
 <a href="figures/readme/ice_thickness_gnn_outliers_thr0p7.png">
   <img src="figures/readme/ice_thickness_gnn_outliers_thr0p7.png" alt="Final GNN outlier map at threshold 0.7" width="100%">
 </a>
+
+This map applies the trained cross-fit models to all `74,747,031` points. It is
+the candidate list that would be inspected next, not a claim that every red
+point is manually confirmed. Code:
+[physae_gnn_v4.py](src/pipeline/physae_gnn_v4.py) and
+[make_ice_thickness_physae_outlier_map.py](src/presentation/make_ice_thickness_physae_outlier_map.py).
 
 ## Code And Figure References
 
