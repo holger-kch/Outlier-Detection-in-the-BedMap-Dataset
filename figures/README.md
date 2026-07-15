@@ -1,11 +1,10 @@
 # Figures
 
-- [pseudolabels/](pseudolabels/) contains pseudo-label figures from main
-  slides 9-10 and Appendix 11-15.
-- [gnn/](gnn/) contains the GNN overview, feature/model/graph figures from
-  main slides 8, 11-12 and Appendix 16-17.
+- [pseudolabels/](pseudolabels/) contains pseudo-label explanation and seed
+  result figures.
+- [gnn/](gnn/) contains the GNN overview, feature/model/graph figures.
 - [results/](results/) contains validation and full-map result figures.
 - [readme/](readme/) contains dark-background PNG previews for GitHub rendering.
 
-PowerPoint backgrounds, logos, stock/photos, slide crops, deck build assets, and
-figures outside main slides 7-16 / Appendix 10-18 are intentionally excluded.
+Presentation backgrounds, logos, stock/photos, deck build assets, and figures
+outside Holger's GNN workflow are intentionally excluded.

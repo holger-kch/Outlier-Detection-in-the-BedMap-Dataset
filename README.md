@@ -14,11 +14,10 @@ selection identifies high-confidence outlier and inlier seeds. A semi-supervised
 GraphSAGE model then learns from those seeds on a k-nearest-neighbour graph and
 assigns an outlier probability to all `74,747,031` points.
 
-Figure scope follows the final presentation: slides 1-4 are explained as
-context, and the tracked figures are restricted to Holger's GNN/pseudo-label
-material inside slides 7-16 and Appendix 10-18. Slide 7 is the group's
-along-track kNN spike-detection method, so it is left out of this GNN-focused
-repository.
+This repository is a standalone GitHub version of Holger's GNN part of the
+project. The presentation deck/PDF is not tracked, so the necessary context,
+figures, results, and code links are rewritten here. Group-method material
+outside the GNN workflow is left out.
 
 README figures are shown full-width where possible and can be clicked to open
 the full-resolution PNG.
@@ -91,7 +90,7 @@ full survey graph.
 
 ## How The GNN Is Built
 
-The overview slide reduces the method to a semi-supervised node-classification
+The overview figure reduces the method to a semi-supervised node-classification
 problem: red/green pseudo-label seeds supervise training on the graph, grey
 nodes are unlabeled during training, and the trained model later scores every
 node.
@@ -314,9 +313,9 @@ point is manually confirmed. Code:
 
 ## Code And Figure References
 
-Every figure shown in this README is mapped to its slide source and generating
-script in [docs/figure_index.md](docs/figure_index.md). The slide-by-slide
-coverage check is in [docs/slide_coverage.md](docs/slide_coverage.md), and the
+Every figure shown in this README is mapped to its analysis step and generating
+script in [docs/figure_index.md](docs/figure_index.md). The project coverage
+check is in [docs/project_coverage.md](docs/project_coverage.md), and the
 analysis workflow is mapped from pseudo-labels to full-map scoring in
 [docs/code_map.md](docs/code_map.md). For taking the code into another project,
 use [docs/reuse_guide.md](docs/reuse_guide.md).
@@ -330,7 +329,7 @@ use [docs/reuse_guide.md](docs/reuse_guide.md).
 │   ├── presentation/   # scripts that generated the GNN figures
 │   └── slurm/          # cluster job wrappers for the GNN run
 ├── figures/
-│   ├── pseudolabels/   # pseudo-label figures from slides/appendix
+│   ├── pseudolabels/   # pseudo-label explanation and result figures
 │   ├── gnn/            # original GNN diagrams
 │   ├── results/        # result figures
 │   └── readme/         # dark-background previews for GitHub
@@ -347,8 +346,8 @@ are intentionally not tracked.
 - [docs/code_map.md](docs/code_map.md) maps each scientific step to code.
 - [docs/figure_index.md](docs/figure_index.md) maps each figure to the script
   that generated it.
-- [docs/slide_coverage.md](docs/slide_coverage.md) states exactly which
-  requested slides are represented by text, code, and figures.
+- [docs/project_coverage.md](docs/project_coverage.md) states exactly which
+  project parts are represented by text, code, and figures.
 - [docs/results_summary.md](docs/results_summary.md) collects the key numbers.
 - [docs/reproduction_notes.md](docs/reproduction_notes.md) explains what is
   needed to rerun the analysis on the original cluster environment.
@@ -358,9 +357,9 @@ are intentionally not tracked.
 ## Scope
 
 This repository focuses only on the GNN component. Other project components
-from the group presentation, such as along-track kNN spike detection, PCA,
-latent-space carving, graph autoencoder work, ensemble slides, and decorative
-PowerPoint backgrounds, are deliberately excluded.
+from the group project, such as along-track kNN spike detection, PCA,
+latent-space carving, graph autoencoder work, ensemble material, and decorative
+presentation backgrounds, are deliberately excluded.
 
 ## Note
 
