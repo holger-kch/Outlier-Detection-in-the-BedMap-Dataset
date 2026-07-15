@@ -1,0 +1,47 @@
+{
+  "dataset_points_scored": 74747031,
+  "seed_labels": {
+    "outlier": 38881,
+    "inlier": 646674
+  },
+  "graph": {
+    "k": 16,
+    "directed_edges": 1195952496,
+    "edge_features": ["log1p_dist", "signed_grad_scaled"]
+  },
+  "node_features": 14,
+  "cross_region_validation": [
+    {
+      "test_direction": "Model B on region A",
+      "outlier_seeds": 19317,
+      "inlier_seeds": 247192,
+      "auc": 0.8653254015876528,
+      "threshold": 0.5,
+      "tn": 169695,
+      "fp": 77497,
+      "fn": 2899,
+      "tp": 16418,
+      "recall": 0.8499249365843558,
+      "fpr": 0.3135093368717434
+    },
+    {
+      "test_direction": "Model A on region B",
+      "outlier_seeds": 19564,
+      "inlier_seeds": 399482,
+      "auc": 0.8584649539754472,
+      "threshold": 0.5,
+      "tn": 377395,
+      "fp": 22087,
+      "fn": 9420,
+      "tp": 10144,
+      "recall": 0.5185033735432427,
+      "fpr": 0.05528909938370189
+    }
+  ],
+  "full_map_inference": {
+    "p_outlier_gte_0p5": 1951535,
+    "p_outlier_gte_0p7": 702675,
+    "p_outlier_gte_0p9": 34500
+  }
+}
+

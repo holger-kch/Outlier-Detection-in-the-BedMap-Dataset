@@ -1,0 +1,10 @@
+{
+  "n_outliers_A": 19317,
+  "n_outliers_B": 19564,
+  "n_inliers_A": 247192,
+  "n_inliers_B": 399482,
+  "n_nodes_A": 9350343,
+  "n_nodes_B": 65396688,
+  "separation_km": 1593.2018834729088,
+  "note": "region defines folds ONLY, never a feature; held-out region fully unseen in training"
+}

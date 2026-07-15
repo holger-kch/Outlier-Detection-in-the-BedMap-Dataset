@@ -1,0 +1,10 @@
+{
+  "n_nodes": 74747031,
+  "n_finite_nodes": 74747031,
+  "k": 16,
+  "n_directed_edges": 1195952496,
+  "node_index_is_row_id": true,
+  "src": "/lustre/hpc/icecube/holgerkc/ML-ICE-PROJECT/catalyst_pipeline/outputs/spatial_edges_v3_src.npy",
+  "dst": "/lustre/hpc/icecube/holgerkc/ML-ICE-PROJECT/catalyst_pipeline/outputs/spatial_edges_v3_dst.npy",
+  "runtime_seconds": 68.78939890861511
+}

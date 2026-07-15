@@ -1,0 +1,9 @@
+{
+  "E": 1195952496,
+  "k": 16,
+  "cols": [
+    "log1p_dist",
+    "signed_grad_scaled"
+  ],
+  "g_scale": 0.05865201007614752
+}

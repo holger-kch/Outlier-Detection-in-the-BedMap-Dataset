@@ -1,0 +1,11 @@
+numpy
+pandas
+pyarrow
+scipy
+scikit-learn
+matplotlib
+Pillow
+torch
+torch-geometric
+optuna
+

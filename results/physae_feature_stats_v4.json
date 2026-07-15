@@ -1,0 +1,75 @@
+{
+  "N": 74747031,
+  "F_in": 14,
+  "std_features": [
+    "sl_ice",
+    "bed",
+    "geom_resid",
+    "surf_minus_bed",
+    "log_speed",
+    "slope",
+    "surf",
+    "smb",
+    "temp"
+  ],
+  "dir_features": [
+    "dir_x",
+    "dir_y"
+  ],
+  "mask_features": [
+    "geom_resid",
+    "smb",
+    "temp"
+  ],
+  "has_bedrecon_col": true,
+  "no_bedmachine": true,
+  "dropped_v_collinear": true,
+  "geom_resid_masked_where_bed_reconstructed": true,
+  "stats": {
+    "sl_ice": {
+      "median": 7.400834360260156,
+      "scale": 0.8366129031564407,
+      "n_sample": 5339125
+    },
+    "bed": {
+      "median": -328.23,
+      "scale": 682.6368174976684,
+      "n_sample": 5327984
+    },
+    "geom_resid": {
+      "median": -1.0480478632155155,
+      "scale": 25.90270775897272,
+      "n_sample": 4139297
+    },
+    "surf_minus_bed": {
+      "median": 1631.1828154292741,
+      "scale": 1227.5035291820157,
+      "n_sample": 5296780
+    },
+    "log_speed": {
+      "median": 3.184782800743566,
+      "scale": 2.352911454105627,
+      "n_sample": 5277849
+    },
+    "slope": {
+      "median": 0.005370850398038061,
+      "scale": 0.006982249471962271,
+      "n_sample": 5298060
+    },
+    "surf": {
+      "median": 1215.790839695409,
+      "scale": 1268.7228255559064,
+      "n_sample": 5296780
+    },
+    "smb": {
+      "median": 167.22931435459213,
+      "scale": 331.2253759831317,
+      "n_sample": 5319720
+    },
+    "temp": {
+      "median": 248.14850642111728,
+      "scale": 10.283185852605538,
+      "n_sample": 5339125
+    }
+  }
+}
